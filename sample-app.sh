@@ -1,6 +1,7 @@
 #!/bin/bash
-set -euo pipefail
+#set -euo pipefail
 
+rm -r tempdir
 mkdir tempdir
 mkdir tempdir/templates
 mkdir tempdir/static
@@ -20,6 +21,8 @@ CMD python /home/myapp/sample_app.py
 _EOF_
 
 cd tempdir || exit
+docker stop samplerunning
+docker rm samplerunning
 docker build -t sampleapp .
 docker run -t -d -p 5050:5050 --name samplerunning sampleapp
-docker ps -a 
+docker ps -a
